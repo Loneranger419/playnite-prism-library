@@ -1,7 +1,8 @@
 ## Build
 bin/
 obj/
-artifacts/
+artifacts/*
+!artifacts/.gitkeep
 [Bb]uild/
 [Ll]og/
 [Ll]ogs/

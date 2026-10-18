@@ -20,3 +20,9 @@ Project-specific guidance for this Playnite plugin. Follow global user rules for
 - Prefer fixture unit tests under `tests/PrismLibrary.Tests` for parsers and launch args.
 - Use `.\build-and-test.ps1` as the single local verification entry point.
 - Manual Playnite checks are still required for library import and launch UX.
+
+## Distribution
+
+- GitHub repo: `Loneranger419/playnite-prism-library`
+- Pack releases with `.\pack-release.ps1` (add `-Publish` to create a GitHub release).
+- Keep `installer.yaml` PackageUrl entries in sync with release asset names (`PrismLibrary_<ver_with_underscores>.pext`).

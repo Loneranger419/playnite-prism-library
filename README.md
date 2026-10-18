@@ -71,6 +71,26 @@ Modrinth and FTB need no API key. CurseForge update checks use the same API key 
 
 Themes can also host the control explicitly with `<ContentControl x:Name="PrismLibrary_PackUpdateButtons" />`.
 
+## Distribution (Playnite add-on)
+
+| File | Purpose |
+|------|---------|
+| `installer.yaml` | Playnite installer manifest (versions + `.pext` URLs) |
+| `manifests/playnite-addon.yaml` | Draft entry for [PlayniteAddonDatabase](https://github.com/JosefNemec/PlayniteAddonDatabase) when plugin submissions reopen |
+| `pack-release.ps1` | Build, pack `.pext`, optionally `gh release create` |
+
+```powershell
+# Build + pack only
+.\pack-release.ps1
+
+# Build, pack, and publish GitHub release v<version> from extension.yaml
+.\pack-release.ps1 -Publish
+```
+
+Manual install until the add-on browser lists this plugin: download the `.pext` from [Releases](https://github.com/Loneranger419/playnite-prism-library/releases) and open it with Playnite, or use the external-extension folder from a local build.
+
+AddonId: `PrismLibrary_b2aeb685-8587-490d-8b0f-5158b2df112f`
+
 ## License
 
 MIT

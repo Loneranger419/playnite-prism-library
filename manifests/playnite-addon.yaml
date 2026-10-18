@@ -1,0 +1,24 @@
+# Draft manifest for JosefNemec/PlayniteAddonDatabase (addons/ directory).
+# New plugin submissions are currently on hold; keep this ready for when they reopen.
+# InstallerManifestUrl must be a raw GitHub URL (or other stable HTTPS URL) to installer.yaml.
+AddonId: PrismLibrary_b2aeb685-8587-490d-8b0f-5158b2df112f
+Type: GameLibrary
+Name: Prism Library
+Author: Loneranger419
+ShortDescription: Import Prism Launcher Minecraft instances into Playnite with metadata and pack update checks.
+InstallerManifestUrl: https://raw.githubusercontent.com/Loneranger419/playnite-prism-library/master/installer.yaml
+SourceUrl: https://github.com/Loneranger419/playnite-prism-library
+Tags:
+  - Minecraft
+  - Prism Launcher
+  - Modrinth
+  - CurseForge
+  - FTB
+Links:
+  GitHub: https://github.com/Loneranger419/playnite-prism-library
+  Prism Launcher: https://prismlauncher.org/
+Description: |-
+  Library plugin for Prism Launcher. Imports instances, launches via Prism CLI,
+  pulls managed pack metadata from Modrinth / CurseForge / FTB, and can check for
+  pack updates then open Prism to apply them. Install/Uninstall in Playnite only
+  toggles enablement; Prism instance files are never deleted.
