@@ -1,0 +1,18 @@
+{
+  "formatVersion": "1",
+  "groups": {
+    "Modded": {
+      "hidden": false,
+      "instances": [
+        "Agrarian Skies",
+        "Create-Pack"
+      ]
+    },
+    "Vanilla": {
+      "hidden": false,
+      "instances": [
+        "1.21.1"
+      ]
+    }
+  }
+}

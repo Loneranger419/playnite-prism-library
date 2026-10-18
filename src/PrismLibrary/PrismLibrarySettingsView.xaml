@@ -1,0 +1,49 @@
+﻿<UserControl x:Class="PrismLibrary.PrismLibrarySettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             d:DesignHeight="520" d:DesignWidth="640">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="0,0,8,0">
+            <TextBlock TextWrapping="Wrap" Margin="0,0,0,12"
+                       Text="Configure Prism Launcher paths. Executable and data root are often different folders on Windows. Install/Uninstall in Playnite only enables or disables an instance here — Prism files are never deleted."/>
+
+            <TextBlock FontWeight="SemiBold" Text="Prism executable (prismlauncher.exe)"/>
+            <DockPanel Margin="0,4,0,12" LastChildFill="True">
+                <Button DockPanel.Dock="Right" Content="Browse..." Margin="8,0,0,0"
+                        Command="{Binding BrowseExecutableCommand}" MinWidth="90"/>
+                <TextBox Text="{Binding Settings.ExecutablePath, UpdateSourceTrigger=PropertyChanged}"/>
+            </DockPanel>
+
+            <TextBlock FontWeight="SemiBold" Text="Prism data root (contains instances/)"/>
+            <DockPanel Margin="0,4,0,12" LastChildFill="True">
+                <Button DockPanel.Dock="Right" Content="Browse..." Margin="8,0,0,0"
+                        Command="{Binding BrowseDataRootCommand}" MinWidth="90"/>
+                <TextBox Text="{Binding Settings.DataRoot, UpdateSourceTrigger=PropertyChanged}"/>
+            </DockPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
+                <Button Content="Detect defaults" Command="{Binding DetectDefaultsCommand}" Margin="0,0,8,0" Padding="10,4"/>
+                <Button Content="Refresh instances" Command="{Binding RefreshInstancesCommand}" Padding="10,4"/>
+            </StackPanel>
+
+            <TextBlock FontWeight="SemiBold" Text="Default account profile (optional)"/>
+            <TextBlock TextWrapping="Wrap" Opacity="0.8" Margin="0,2,0,4"
+                       Text="Must match a Prism account profile name. Leave empty to use Prism's default account."/>
+            <TextBox Text="{Binding Settings.DefaultProfile, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,16"/>
+
+            <TextBlock FontWeight="SemiBold" Text="Enabled instances (Installed in Playnite)"/>
+            <TextBlock TextWrapping="Wrap" Opacity="0.8" Margin="0,2,0,8"
+                       Text="Checked instances appear as Installed and can be launched. Unchecked instances stay in the library as Uninstalled."/>
+            <ListBox ItemsSource="{Binding InstanceItems}" Height="220">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <CheckBox IsChecked="{Binding IsEnabled, Mode=TwoWay}" Content="{Binding Name}"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>
