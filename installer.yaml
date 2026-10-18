@@ -1,5 +1,11 @@
 AddonId: PrismLibrary_b2aeb685-8587-490d-8b0f-5158b2df112f
 Packages:
+  - Version: 1.1.1
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2026-10-18
+    PackageUrl: https://github.com/Loneranger419/playnite-prism-library/releases/download/v1.1.1/PrismLibrary_1_1_1.pext
+    Changelog:
+      - Fix .pext install failing to load (Newtonsoft.Json version mismatch with Playnite)
   - Version: 1.1.0
     RequiredApiVersion: 6.11.0
     ReleaseDate: 2026-10-18
