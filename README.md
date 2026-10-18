@@ -24,19 +24,30 @@ Install / Uninstall in Playnite only toggles enablement. Prism instance files ar
 - [Playnite](https://playnite.link/) 9+
 - Prism Launcher
 
-## Development install
+## Install
 
-1. Build:
+The Playnite add-on browser does not list this plugin yet (new plugin submissions are on hold), so install from GitHub:
 
-   ```powershell
-   .\build-and-test.ps1
-   ```
+1. Download the latest `.pext` from [Releases](https://github.com/Loneranger419/playnite-prism-library/releases).
+2. Open the file (double-click, or drag it onto Playnite). Playnite will install the extension and ask to restart.
+3. After restart: **Add-on settings → Libraries → Prism Library** (or **Prism Launcher**), set **executable** and **data root** (or **Detect defaults**), enable the instances you want as Installed, then **Update Game Library**.
 
-2. In Playnite: **Settings → For developers → External extensions** → add:
+### Updating (manual)
 
-   `src\PrismLibrary\bin\Release\net462`
+Playnite will not auto-update this extension until it is accepted into the [add-on database](https://github.com/JosefNemec/PlayniteAddonDatabase). To update:
 
-3. Restart Playnite, open **Add-on settings → Libraries → Prism Launcher**, set paths (or **Detect defaults**), enable instances, then **Update Game Library**.
+1. Download the newer `.pext` from [Releases](https://github.com/Loneranger419/playnite-prism-library/releases).
+2. Open it with Playnite again (same as install). Restart when prompted.
+
+### Development install
+
+For local builds instead of a release `.pext`:
+
+1. `.\build-and-test.ps1`
+2. Playnite → **Settings → For developers → External extensions** → add `src\PrismLibrary\bin\Release\net462`
+3. Restart Playnite and configure as above.
+
+Do not load the same AddonId both as an installed `.pext` and as an external extension folder at once.
 
 ## Configuration
 
@@ -87,9 +98,7 @@ Themes can also host the control explicitly with `<ContentControl x:Name="PrismL
 .\pack-release.ps1 -Publish
 ```
 
-Manual install until the add-on browser lists this plugin: download the `.pext` from [Releases](https://github.com/Loneranger419/playnite-prism-library/releases) and open it with Playnite, or use the external-extension folder from a local build.
-
-AddonId: `PrismLibrary_b2aeb685-8587-490d-8b0f-5158b2df112f`
+See [Install](#install) for end-user `.pext` setup. AddonId: `PrismLibrary_b2aeb685-8587-490d-8b0f-5158b2df112f`
 
 ## License
 
