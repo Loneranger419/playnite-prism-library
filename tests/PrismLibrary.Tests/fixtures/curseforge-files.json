@@ -1,0 +1,28 @@
+{
+  "data": [
+    {
+      "id": 7000002,
+      "isAvailable": true,
+      "displayName": "Pack 8.0-beta",
+      "fileName": "pack-8.0-beta.zip",
+      "releaseType": 2,
+      "fileDate": "2026-04-02T10:00:00Z"
+    },
+    {
+      "id": 7000001,
+      "isAvailable": true,
+      "displayName": "Pack 7.4",
+      "fileName": "pack-7.4.zip",
+      "releaseType": 1,
+      "fileDate": "2026-04-01T10:00:00Z"
+    },
+    {
+      "id": 7000000,
+      "isAvailable": true,
+      "displayName": "Pack 7.3",
+      "fileName": "pack-7.3.zip",
+      "releaseType": 1,
+      "fileDate": "2026-03-01T10:00:00Z"
+    }
+  ]
+}

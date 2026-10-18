@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json.Linq;
 using PrismLibrary.Models;
@@ -18,6 +20,95 @@ namespace PrismLibrary.Services.Metadata
         public PackMetadataInfo Fetch(PrismInstance instance, string curseForgeApiKey)
         {
             return Parse(http.GetString("https://api.modrinth.com/v2/project/" + instance.ManagedPackId), instance.ManagedPackId);
+        }
+
+        public PackVersionInfo FetchLatestVersion(PrismInstance instance)
+        {
+            if (instance == null || string.IsNullOrWhiteSpace(instance.ManagedPackId))
+            {
+                return null;
+            }
+
+            var filtered = ParseLatestVersion(http.GetString(BuildVersionsUrl(instance, preferFilters: true)));
+            if (filtered != null)
+            {
+                return filtered;
+            }
+
+            return ParseLatestVersion(http.GetString(BuildVersionsUrl(instance, preferFilters: false)));
+        }
+
+        public static PackVersionInfo ParseLatestVersion(string json)
+        {
+            if (string.IsNullOrWhiteSpace(json))
+            {
+                return null;
+            }
+
+            JArray root;
+            try
+            {
+                root = JArray.Parse(json);
+            }
+            catch
+            {
+                return null;
+            }
+
+            var versions = root.OfType<JObject>().ToList();
+            if (versions.Count == 0)
+            {
+                return null;
+            }
+
+            var preferred = versions.FirstOrDefault(v =>
+                string.Equals(v.Value<string>("version_type"), "release", StringComparison.OrdinalIgnoreCase));
+            var chosen = preferred ?? versions[0];
+            var id = chosen.Value<string>("id");
+            if (string.IsNullOrWhiteSpace(id))
+            {
+                return null;
+            }
+
+            DateTime? published = null;
+            if (DateTime.TryParse(chosen.Value<string>("date_published"), null,
+                    System.Globalization.DateTimeStyles.RoundtripKind, out var parsed))
+            {
+                published = parsed.ToUniversalTime();
+            }
+
+            return new PackVersionInfo
+            {
+                VersionId = id,
+                VersionName = chosen.Value<string>("version_number"),
+                PublishedUtc = published
+            };
+        }
+
+        private static string BuildVersionsUrl(PrismInstance instance, bool preferFilters)
+        {
+            var url = "https://api.modrinth.com/v2/project/" + Uri.EscapeDataString(instance.ManagedPackId) + "/version";
+            var query = new List<string> { "limit=20" };
+
+            if (preferFilters)
+            {
+                if (!string.IsNullOrWhiteSpace(instance.MinecraftVersion))
+                {
+                    query.Add("game_versions=" + Uri.EscapeDataString("[\"" + instance.MinecraftVersion.Trim() + "\"]"));
+                }
+
+                var loaders = instance.Loaders?
+                    .Where(l => !string.IsNullOrWhiteSpace(l))
+                    .Select(l => l.Trim().ToLowerInvariant())
+                    .Distinct()
+                    .ToList();
+                if (loaders != null && loaders.Count > 0)
+                {
+                    query.Add("loaders=" + Uri.EscapeDataString("[\"" + string.Join("\",\"", loaders) + "\"]"));
+                }
+            }
+
+            return url + "?" + string.Join("&", query);
         }
 
         public static PackMetadataInfo Parse(string json, string packId)

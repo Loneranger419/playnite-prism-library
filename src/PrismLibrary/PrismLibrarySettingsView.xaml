@@ -36,8 +36,12 @@
 
             <TextBlock FontWeight="SemiBold" Text="CurseForge API key (optional)"/>
             <TextBlock TextWrapping="Wrap" Opacity="0.8" Margin="0,2,0,4"
-                       Text="Needed only for CurseForge pack page metadata (description/cover). Modrinth and FTB need no key. Create a key in the CurseForge for Studios developer console, then use Download Metadata in Playnite."/>
+                       Text="Needed for CurseForge pack metadata and update checks. Modrinth and FTB need no key. Create a key in the CurseForge for Studios developer console."/>
             <TextBox Text="{Binding Settings.CurseForgeApiKey, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,16"/>
+
+            <TextBlock FontWeight="SemiBold" Text="Managed pack updates"/>
+            <TextBlock TextWrapping="Wrap" Opacity="0.8" Margin="0,2,0,16"
+                       Text="Use Main menu → Prism Launcher → Check managed packs for updates (or the game context menu). When an update is available, Update in Prism opens the instance in Prism so you can apply it there. Prism files are never modified by this plugin."/>
 
             <TextBlock FontWeight="SemiBold" Text="Enabled instances (Installed in Playnite)"/>
             <TextBlock TextWrapping="Wrap" Opacity="0.8" Margin="0,2,0,8"

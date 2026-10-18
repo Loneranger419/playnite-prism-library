@@ -23,6 +23,89 @@ namespace PrismLibrary.Services.Metadata
                 instance.ManagedPackId);
         }
 
+        public PackVersionInfo FetchLatestVersion(PrismInstance instance)
+        {
+            if (instance == null || string.IsNullOrWhiteSpace(instance.ManagedPackId))
+            {
+                return null;
+            }
+
+            return ParseLatestVersion(
+                http.GetString("https://api.feed-the-beast.com/v1/modpacks/public/modpack/" +
+                               Uri.EscapeDataString(instance.ManagedPackId)));
+        }
+
+        public static PackVersionInfo ParseLatestVersion(string json)
+        {
+            if (string.IsNullOrWhiteSpace(json))
+            {
+                return null;
+            }
+
+            JObject root;
+            try
+            {
+                root = JObject.Parse(json);
+            }
+            catch
+            {
+                return null;
+            }
+
+            var versions = root["versions"] as JArray;
+            if (versions == null || versions.Count == 0)
+            {
+                return null;
+            }
+
+            var candidates = versions.OfType<JObject>()
+                .Where(v =>
+                {
+                    var type = v.Value<string>("type");
+                    return !string.Equals(type, "archived", StringComparison.OrdinalIgnoreCase) &&
+                           !string.Equals(type, "hidden", StringComparison.OrdinalIgnoreCase);
+                })
+                .ToList();
+
+            if (candidates.Count == 0)
+            {
+                candidates = versions.OfType<JObject>().ToList();
+            }
+
+            var releases = candidates
+                .Where(v => string.Equals(v.Value<string>("type"), "release", StringComparison.OrdinalIgnoreCase))
+                .ToList();
+            var pool = releases.Count > 0 ? releases : candidates;
+
+            var chosen = pool
+                .OrderByDescending(v => v.Value<long?>("updated") ?? v.Value<long?>("released") ?? 0)
+                .ThenByDescending(v => v.Value<long?>("id") ?? 0)
+                .FirstOrDefault();
+
+            if (chosen == null)
+            {
+                return null;
+            }
+
+            var id = chosen.Value<long?>("id");
+            if (id == null)
+            {
+                return null;
+            }
+
+            long? stamp = chosen.Value<long?>("updated") ?? chosen.Value<long?>("released");
+            DateTime? published = stamp != null && stamp.Value > 0
+                ? DateTimeOffset.FromUnixTimeSeconds(stamp.Value).UtcDateTime
+                : (DateTime?)null;
+
+            return new PackVersionInfo
+            {
+                VersionId = id.Value.ToString(),
+                VersionName = chosen.Value<string>("name"),
+                PublishedUtc = published
+            };
+        }
+
         public static PackMetadataInfo Parse(string json, string packId)
         {
             if (string.IsNullOrWhiteSpace(json))

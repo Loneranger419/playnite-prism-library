@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Text;
 using Playnite.SDK.Models;
@@ -27,6 +28,14 @@ namespace PrismLibrary.Services
             return builder.ToString().Trim();
         }
 
+        public static string BuildCheckUpdateScript(Guid pluginId)
+        {
+            return "$plugin = $PlayniteApi.Addons.Plugins | Where-Object { $_.Id -eq [Guid]'" + pluginId +
+                   "' } | Select-Object -First 1\n" +
+                   "if ($null -ne $plugin) { $plugin.CheckPackUpdateFromUi($Game.GameId) }\n" +
+                   "else { $PlayniteApi.Dialogs.ShowErrorMessage('Prism Library plugin not loaded.', 'Prism Launcher') }";
+        }
+
         public static List<GameAction> BuildActions(
             string executablePath,
             string dataRoot,
@@ -34,7 +43,10 @@ namespace PrismLibrary.Services
             string instanceDirectory,
             string minecraftDirectory,
             string profile,
-            bool isEnabled)
+            bool isEnabled,
+            bool isManagedPack = false,
+            Guid? pluginId = null,
+            bool updateAvailable = false)
         {
             var actions = new List<GameAction>();
 
@@ -48,6 +60,31 @@ namespace PrismLibrary.Services
                     Arguments = BuildLaunchArguments(dataRoot, instanceId, profile),
                     IsPlayAction = true
                 });
+            }
+
+            if (isManagedPack && pluginId != null)
+            {
+                if (updateAvailable)
+                {
+                    actions.Add(new GameAction
+                    {
+                        Name = "Update in Prism",
+                        Type = GameActionType.File,
+                        Path = executablePath,
+                        Arguments = BuildShowArguments(dataRoot, instanceId),
+                        IsPlayAction = false
+                    });
+                }
+                else
+                {
+                    actions.Add(new GameAction
+                    {
+                        Name = "Check for pack update",
+                        Type = GameActionType.Script,
+                        Script = BuildCheckUpdateScript(pluginId.Value),
+                        IsPlayAction = false
+                    });
+                }
             }
 
             actions.Add(new GameAction

@@ -13,6 +13,7 @@ Project-specific guidance for this Playnite plugin. Follow global user rules for
 
 - Treat Prism files as read-only in v1. Do not write `instance.cfg`, `instgroups.json`, or delete instance folders.
 - Playnite Install/Uninstall must only toggle `EnabledInstanceIds` in plugin settings.
+- Managed pack updates: detect via platform APIs vs `ManagedPackVersionID`; install only by opening Prism (`--show`). Do not reimplement pack install/overwrite in the plugin.
 
 ## Verification
 

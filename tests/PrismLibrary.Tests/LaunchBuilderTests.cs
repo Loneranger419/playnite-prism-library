@@ -35,6 +35,42 @@ namespace PrismLibrary.Tests
             Assert.DoesNotContain(disabled, a => a.IsPlayAction);
             Assert.Contains(disabled, a => a.Name == "Open in Prism");
             Assert.Contains(disabled, a => a.Name == "Open Instance Folder");
+            Assert.DoesNotContain(enabled, a => a.Name == "Update in Prism");
+        }
+
+        [Fact]
+        public void BuildActions_ManagedPackShowsCheckUntilUpdateAvailable()
+        {
+            var pluginId = System.Guid.Parse("b2aeb685-8587-490d-8b0f-5158b2df112f");
+            var uncheckedActions = LaunchBuilder.BuildActions(
+                @"C:\prismlauncher.exe",
+                @"C:\data",
+                "pack",
+                @"C:\data\instances\pack",
+                @"C:\data\instances\pack\.minecraft",
+                null,
+                true,
+                isManagedPack: true,
+                pluginId: pluginId,
+                updateAvailable: false);
+
+            Assert.Contains(uncheckedActions, a => a.Name == "Check for pack update");
+            Assert.DoesNotContain(uncheckedActions, a => a.Name == "Update in Prism");
+
+            var updateActions = LaunchBuilder.BuildActions(
+                @"C:\prismlauncher.exe",
+                @"C:\data",
+                "pack",
+                @"C:\data\instances\pack",
+                @"C:\data\instances\pack\.minecraft",
+                null,
+                true,
+                isManagedPack: true,
+                pluginId: pluginId,
+                updateAvailable: true);
+
+            Assert.Contains(updateActions, a => a.Name == "Update in Prism");
+            Assert.DoesNotContain(updateActions, a => a.Name == "Check for pack update");
         }
     }
 }

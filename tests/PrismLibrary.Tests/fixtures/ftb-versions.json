@@ -1,0 +1,34 @@
+{
+  "id": 130,
+  "slug": "ftb-stoneblock-4",
+  "versions": [
+    {
+      "id": 100140,
+      "name": "1.0.0",
+      "type": "release",
+      "updated": 1761664502,
+      "released": 1761664502
+    },
+    {
+      "id": 100142,
+      "name": "1.0.2",
+      "type": "archived",
+      "updated": 1762040967,
+      "released": 1762032602
+    },
+    {
+      "id": 100144,
+      "name": "1.0.4",
+      "type": "release",
+      "updated": 1762205402,
+      "released": 1762205402
+    },
+    {
+      "id": 100145,
+      "name": "1.0.5-beta",
+      "type": "beta",
+      "updated": 1762300000,
+      "released": 1762300000
+    }
+  ]
+}
