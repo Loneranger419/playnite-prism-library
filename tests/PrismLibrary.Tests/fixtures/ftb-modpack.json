@@ -1,0 +1,33 @@
+{
+  "name": "FTB StoneBlock 4",
+  "id": 130,
+  "slug": "ftb-stoneblock-4",
+  "synopsis": "The stone remembers.",
+  "description": "## **The Stone Remembers**\n\nYou wake surrounded by stone. **StoneBlock 4** is rebuilt from the ground up.\n\n---\n\n## **The Vaults**\n\nDeep within the stone lie the Vaults.",
+  "art": [
+    {
+      "type": "square",
+      "url": "https://cdn.feed-the-beast.com/square.png"
+    },
+    {
+      "type": "splash",
+      "url": "https://cdn.feed-the-beast.com/splash.png"
+    }
+  ],
+  "authors": [
+    {
+      "name": "FTB Team",
+      "website": "https://www.feed-the-beast.com/"
+    }
+  ],
+  "tags": [
+    { "name": "Skyblock" },
+    { "name": "Kitchen Sink" }
+  ],
+  "links": [
+    {
+      "name": "Wiki",
+      "link": "https://docs.feed-the-beast.com"
+    }
+  ]
+}

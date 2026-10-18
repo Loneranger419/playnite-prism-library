@@ -7,6 +7,7 @@ Project-specific guidance for this Playnite plugin. Follow global user rules for
 - Target `net462` only. Do not retarget to modern .NET; Playnite plugins require .NET Framework 4.6.2.
 - Entry point: `PrismLibraryPlugin` (`LibraryPlugin`) with GUID `b2aeb685-8587-490d-8b0f-5158b2df112f`. Never change the GUID after release.
 - Always launch instances through `prismlauncher.exe` with separate executable vs data-root settings.
+- Playnite already ships Markdig ~0.18. Compile against that API and do **not** copy a newer Markdig.dll into the plugin output (causes `MissingMethodException` at runtime).
 
 ## Prism data
 

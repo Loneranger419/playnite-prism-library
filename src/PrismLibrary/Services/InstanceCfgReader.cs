@@ -9,6 +9,13 @@ namespace PrismLibrary.Services
         public string IconKey { get; set; }
         public ulong TotalTimePlayedSeconds { get; set; }
         public DateTime? LastLaunch { get; set; }
+        public bool ManagedPack { get; set; }
+        public string ManagedPackType { get; set; }
+        public string ManagedPackId { get; set; }
+        public string ManagedPackName { get; set; }
+        public string ManagedPackVersionId { get; set; }
+        public string ManagedPackVersionName { get; set; }
+        public string ManagedPackUrl { get; set; }
     }
 
     public static class InstanceCfgReader
@@ -28,8 +35,16 @@ namespace PrismLibrary.Services
             var data = new InstanceCfgData
             {
                 Name = Get(values, "name"),
-                IconKey = Get(values, "iconKey")
+                IconKey = Get(values, "iconKey"),
+                ManagedPackType = Get(values, "ManagedPackType"),
+                ManagedPackId = Get(values, "ManagedPackID"),
+                ManagedPackName = Get(values, "ManagedPackName"),
+                ManagedPackVersionId = Get(values, "ManagedPackVersionID"),
+                ManagedPackVersionName = Get(values, "ManagedPackVersionName"),
+                ManagedPackUrl = Get(values, "ManagedPackURL")
             };
+
+            data.ManagedPack = ParseBool(Get(values, "ManagedPack"));
 
             if (TryParseInt64(Get(values, "totalTimePlayed"), out var played) && played > 0)
             {
@@ -47,6 +62,17 @@ namespace PrismLibrary.Services
         private static string Get(System.Collections.Generic.Dictionary<string, string> values, string key)
         {
             return values != null && values.TryGetValue(key, out var value) ? value : null;
+        }
+
+        private static bool ParseBool(string value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                return false;
+            }
+
+            return string.Equals(value, "true", StringComparison.OrdinalIgnoreCase) ||
+                   string.Equals(value, "1", StringComparison.OrdinalIgnoreCase);
         }
 
         private static bool TryParseInt64(string value, out long result)

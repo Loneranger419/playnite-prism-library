@@ -8,6 +8,7 @@ using Playnite.SDK;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using PrismLibrary.Controllers;
+using PrismLibrary.Models;
 using PrismLibrary.Services;
 
 namespace PrismLibrary
@@ -42,6 +43,28 @@ namespace PrismLibrary
             return PrismPaths.Resolve(settings.Settings.ExecutablePath, settings.Settings.DataRoot);
         }
 
+        public string GetCurseForgeApiKey()
+        {
+            return settings.Settings.CurseForgeApiKey;
+        }
+
+        public PrismInstance FindInstance(string gameId)
+        {
+            var paths = GetResolvedPaths();
+            if (!paths.IsValid || string.IsNullOrWhiteSpace(gameId))
+            {
+                return null;
+            }
+
+            return InstanceScanner.Scan(paths)
+                .FirstOrDefault(i => string.Equals(i.Id, gameId, StringComparison.OrdinalIgnoreCase));
+        }
+
+        public override LibraryMetadataProvider GetMetadataDownloader()
+        {
+            return new PrismMetadataProvider(this);
+        }
+
         public override IEnumerable<GameMetadata> GetGames(LibraryGetGamesArgs args)
         {
             var paths = GetResolvedPaths();
@@ -70,11 +93,32 @@ namespace PrismLibrary
                     tags.Add(new MetadataNameProperty(loader));
                 }
 
+                var platformName = PackPlatform.GetDisplayName(instance.PlatformKind);
+                if (!string.IsNullOrWhiteSpace(platformName))
+                {
+                    tags.Add(new MetadataNameProperty(platformName));
+                }
+
                 var categories = new HashSet<MetadataProperty>();
                 if (!string.IsNullOrWhiteSpace(instance.Group))
                 {
                     categories.Add(new MetadataNameProperty(instance.Group));
                 }
+
+                var links = new List<Link>();
+                var projectUrl = PackPlatform.GetProjectUrl(instance.PlatformKind, instance.ManagedPackId);
+                if (!string.IsNullOrWhiteSpace(projectUrl))
+                {
+                    links.Add(new Link(platformName ?? "Pack Page", projectUrl));
+                }
+                else if (!string.IsNullOrWhiteSpace(instance.ManagedPackUrl))
+                {
+                    links.Add(new Link("Pack URL", instance.ManagedPackUrl));
+                }
+
+                var version = !string.IsNullOrWhiteSpace(instance.ManagedPackVersionName)
+                    ? instance.ManagedPackVersionName
+                    : instance.MinecraftVersion;
 
                 var metadata = new GameMetadata
                 {
@@ -84,10 +128,11 @@ namespace PrismLibrary
                     InstallDirectory = instance.InstanceDirectory,
                     Playtime = instance.TotalTimePlayedSeconds,
                     LastActivity = instance.LastLaunch,
-                    Version = instance.MinecraftVersion,
+                    Version = version,
                     Platforms = new HashSet<MetadataProperty> { new MetadataNameProperty("PC") },
                     Tags = tags,
                     Categories = categories,
+                    Links = links.Count > 0 ? links : null,
                     GameActions = LaunchBuilder.BuildActions(
                         paths.ExecutablePath,
                         paths.DataRoot,
@@ -153,15 +198,7 @@ namespace PrismLibrary
 
         private string ResolveInstanceDirectory(string instanceId)
         {
-            var paths = GetResolvedPaths();
-            if (!paths.IsValid)
-            {
-                return null;
-            }
-
-            return InstanceScanner.Scan(paths)
-                .FirstOrDefault(i => string.Equals(i.Id, instanceId, StringComparison.OrdinalIgnoreCase))
-                ?.InstanceDirectory;
+            return FindInstance(instanceId)?.InstanceDirectory;
         }
     }
 }

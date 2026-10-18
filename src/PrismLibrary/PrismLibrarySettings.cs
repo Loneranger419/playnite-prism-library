@@ -15,11 +15,13 @@ namespace PrismLibrary
         private string executablePath = string.Empty;
         private string dataRoot = string.Empty;
         private string defaultProfile = string.Empty;
+        private string curseForgeApiKey = string.Empty;
         private List<string> enabledInstanceIds = new List<string>();
 
         public string ExecutablePath { get => executablePath; set => SetValue(ref executablePath, value); }
         public string DataRoot { get => dataRoot; set => SetValue(ref dataRoot, value); }
         public string DefaultProfile { get => defaultProfile; set => SetValue(ref defaultProfile, value); }
+        public string CurseForgeApiKey { get => curseForgeApiKey; set => SetValue(ref curseForgeApiKey, value); }
 
         public List<string> EnabledInstanceIds
         {

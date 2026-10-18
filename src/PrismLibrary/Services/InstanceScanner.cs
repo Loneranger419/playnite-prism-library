@@ -50,7 +50,14 @@ namespace PrismLibrary.Services
                     Loaders = pack.Loaders?.ToList() ?? new List<string>(),
                     Group = group,
                     TotalTimePlayedSeconds = cfg.TotalTimePlayedSeconds,
-                    LastLaunch = cfg.LastLaunch
+                    LastLaunch = cfg.LastLaunch,
+                    ManagedPack = cfg.ManagedPack,
+                    ManagedPackType = cfg.ManagedPackType,
+                    ManagedPackId = cfg.ManagedPackId,
+                    ManagedPackName = cfg.ManagedPackName,
+                    ManagedPackVersionId = cfg.ManagedPackVersionId,
+                    ManagedPackVersionName = cfg.ManagedPackVersionName,
+                    ManagedPackUrl = cfg.ManagedPackUrl
                 });
             }
 

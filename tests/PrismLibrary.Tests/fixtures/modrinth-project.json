@@ -1,0 +1,18 @@
+{
+  "id": "AABBCCDD",
+  "slug": "cobblemon",
+  "title": "Cobblemon",
+  "description": "Short summary",
+  "body": "<p>Full Cobblemon body</p><iframe src=\"https://www.youtube.com/embed/dQw4w9WgXcQ\" width=\"560\" height=\"315\"></iframe>",
+  "icon_url": "https://cdn.modrinth.com/data/icon.png",
+  "gallery": [
+    {
+      "url": "https://cdn.modrinth.com/data/gallery1.png"
+    }
+  ],
+  "categories": ["adventure", "magic"],
+  "source_url": "https://github.com/example/cobblemon",
+  "issues_url": "https://github.com/example/cobblemon/issues",
+  "wiki_url": "https://wiki.example.com",
+  "author": "Cobblemon Team"
+}

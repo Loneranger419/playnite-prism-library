@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
-             d:DesignHeight="520" d:DesignWidth="640">
+             d:DesignHeight="620" d:DesignWidth="640">
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <StackPanel Margin="0,0,8,0">
             <TextBlock TextWrapping="Wrap" Margin="0,0,0,12"
@@ -34,10 +34,15 @@
                        Text="Must match a Prism account profile name. Leave empty to use Prism's default account."/>
             <TextBox Text="{Binding Settings.DefaultProfile, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,16"/>
 
+            <TextBlock FontWeight="SemiBold" Text="CurseForge API key (optional)"/>
+            <TextBlock TextWrapping="Wrap" Opacity="0.8" Margin="0,2,0,4"
+                       Text="Needed only for CurseForge pack page metadata (description/cover). Modrinth and FTB need no key. Create a key in the CurseForge for Studios developer console, then use Download Metadata in Playnite."/>
+            <TextBox Text="{Binding Settings.CurseForgeApiKey, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,16"/>
+
             <TextBlock FontWeight="SemiBold" Text="Enabled instances (Installed in Playnite)"/>
             <TextBlock TextWrapping="Wrap" Opacity="0.8" Margin="0,2,0,8"
                        Text="Checked instances appear as Installed and can be launched. Unchecked instances stay in the library as Uninstalled."/>
-            <ListBox ItemsSource="{Binding InstanceItems}" Height="220">
+            <ListBox ItemsSource="{Binding InstanceItems}" Height="200">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <CheckBox IsChecked="{Binding IsEnabled, Mode=TwoWay}" Content="{Binding Name}"/>

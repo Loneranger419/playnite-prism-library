@@ -1,0 +1,30 @@
+{
+  "data": {
+    "id": 925200,
+    "name": "All the Mods 10",
+    "summary": "ATM10 summary",
+    "links": {
+      "websiteUrl": "https://www.curseforge.com/minecraft/modpacks/all-the-mods-10",
+      "wikiUrl": "https://wiki.example.com/atm10",
+      "issuesUrl": "https://github.com/example/atm10/issues",
+      "sourceUrl": "https://github.com/example/atm10"
+    },
+    "categories": [
+      { "name": "Modpacks" },
+      { "name": "Multiplayer" },
+      { "name": "Adventure and RPG" }
+    ],
+    "authors": [
+      { "name": "ATMTeam" }
+    ],
+    "logo": {
+      "url": "https://media.forgecdn.net/avatars/atm10.png",
+      "thumbnailUrl": "https://media.forgecdn.net/avatars/thumb-atm10.png"
+    },
+    "screenshots": [
+      {
+        "url": "https://media.forgecdn.net/screenshots/atm10.png"
+      }
+    ]
+  }
+}

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using PrismLibrary.Services;
 
 namespace PrismLibrary.Models
 {
@@ -16,5 +17,18 @@ namespace PrismLibrary.Models
         public string Group { get; set; }
         public ulong TotalTimePlayedSeconds { get; set; }
         public DateTime? LastLaunch { get; set; }
+        public bool ManagedPack { get; set; }
+        public string ManagedPackType { get; set; }
+        public string ManagedPackId { get; set; }
+        public string ManagedPackName { get; set; }
+        public string ManagedPackVersionId { get; set; }
+        public string ManagedPackVersionName { get; set; }
+        public string ManagedPackUrl { get; set; }
+
+        public PackPlatformKind PlatformKind =>
+            ManagedPack ? PackPlatform.Parse(ManagedPackType) : PackPlatformKind.None;
+
+        public bool HasManagedPackId =>
+            ManagedPack && !string.IsNullOrWhiteSpace(ManagedPackId);
     }
 }
