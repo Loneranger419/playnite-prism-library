@@ -80,6 +80,8 @@ Prism has no non-interactive “update modpack” CLI, so this plugin detects up
 
 Modrinth and FTB need no API key. CurseForge update checks use the same API key as metadata.
 
+**Theme / add-on compatibility:** the on-page **Check for update** / **Update in Prism** buttons are injected next to Playnite’s Play/More controls. Some themes or other extensions change that layout and can hide or break those buttons. Check/Update still work from the game context menu and **Main menu → Prism Launcher**. If the buttons are missing or the Play/More row looks wrong, please [open a bug report](https://github.com/Loneranger419/playnite-prism-library/issues/new?labels=bug) with your Playnite version, theme name, and any other extensions installed.
+
 Themes can also host the control explicitly with `<ContentControl x:Name="PrismLibrary_PackUpdateButtons" />`.
 
 ## Distribution (Playnite add-on)
